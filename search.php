@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>查询结果</title>
+		<title>查询结果 | 电力宝</title>
 	</head>
 	<body>
 		<h1>请输入你要查询的产品型号</h1>
@@ -25,20 +25,26 @@
 				<option value="天正">天正</option>
 			</select>
 			<label for="name">产品型号</label>
-			<input type="text" id="name" name="name">
-			<input type="submit" value="提交查询"	name="submit">
+			<input type="text" id="name" name="name" placeholder="超过30万条记录">
+			<input type="submit" value="提交查询"	name="submit">  
 		</form>
+
 		<?php
-			header("Content-Type:text/html; charset=utf-8");
 			$name = $_POST['name'];
 			$brand = $_POST['brand'];
-		
-			$dbc = mysqli_connect('localhost', 'youngdog', 'youngdog', 'dlb') or die('连接服务器出错.');
-			mysqli_query($dbc,"set names 'utf8'");
-	        if($name){   //此处加判断是为了防止空值输入，打印出所有的条目，导致浏览器崩溃
-				$query = "select * from product where spec like '%$name%' and brand like '$brand'";
-				//$query = "select * from product where name like '%$name%' ";
-				if($result = mysqli_query($dbc, $query)){
+
+			if(isset($_POST['submit'])){ //判断是否有点击提交
+		        if(!empty($name)){   //如果有提交，如果输入型号不为空
+
+		        	//连接数据库
+		        	$dbc = mysqli_connect('localhost', 'youngdog', 'youngdog', 'dlb') or die('连接服务器出错.');
+					mysqli_query($dbc,"set names 'utf8'");
+
+					//查询数据库
+					$query = "select * from product where spec like '%$name%' and brand like '$brand'";
+					$result = mysqli_query($dbc, $query) or die(查询出错);
+
+					//显示查询结果
 					echo  '<br />';
 					printf("查询成功 总共%d条结果", mysqli_num_rows($result));
 					echo   '<br />'.'<br />';
@@ -58,16 +64,18 @@
 						echo '<td>'; echo $row['price']; echo'</td>';
 						echo '</tr>';
 					} 
-					echo '</table>';
-				}	
-				else{
-					printf("查询错误。");
+					echo '</table>';	
+			
+					//关闭数据库
+					mysqli_close($dbc);
 				}
-				mysql_free_result($result);
-				mysqli_close($dbc);
+
+				else echo '请输入型号';    //如果有提交，但是没有输入型号
 			}
-			else echo '请输入型号';	
+			
 		 ?>
+
+		 
 		 <!-- 下面这行是网站访问统计代码 -->
 		 <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1256323616'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1256323616%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script>
 		 </body>
