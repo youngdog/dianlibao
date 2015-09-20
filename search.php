@@ -19,13 +19,13 @@
 		<form action="search.php" method="post">
 			<select name="brand">
 				<option value="%">默认不指定厂家</option>
-				<option value="正泰">正泰</option>
-				<option value="德力西">德力西</option>
-				<option value="中国人民">中国人民</option>
-				<option value="天正">天正</option>
+				<option value="正泰" <?php if($_POST['brand'] == '正泰') echo 'selected'?>>正泰</option>
+				<option value="德力西" <?php if($_POST['brand'] == '德力西') echo 'selected'?>>德力西</option>
+				<option value="中国人民" <?php if($_POST['brand'] == '中国人民') echo 'selected'?>>中国人民</option>
+				<option value="天正" <?php if($_POST['brand'] == '天正') echo 'selected'?>>天正</option>
 			</select>
 			<label for="name">产品型号</label>
-			<input type="text" id="name" name="name" placeholder="超过30万条记录">
+			<input type="text" id="name" name="name" placeholder="超过三十万条数据" value="<?php echo $_POST['name']; ?>">
 			<input type="submit" value="提交查询"	name="submit">  
 		</form>
 
