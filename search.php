@@ -30,10 +30,14 @@
 		</form>
 
 		<?php
+			require 'counter.php';
 			$name = $_POST['name'];
 			$brand = $_POST['brand'];
 
 			if(isset($_POST['submit'])){ //判断是否有点击提交
+
+				printf("累计查询%d次", counter());
+				
 		        if(!empty($name)){   //如果有提交，如果输入型号不为空
 
 		        	//连接数据库
@@ -77,6 +81,6 @@
 
 		 
 		 <!-- 下面这行是网站访问统计代码 -->
-		 <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1256323616'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1256323616%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script>
+		 <!--script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1256323616'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1256323616%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script-->
 		 </body>
 </html>
