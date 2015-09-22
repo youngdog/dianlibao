@@ -1,23 +1,31 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
      
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
 		<title>查询结果 | 电力宝</title>
+
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+
 	</head>
 	<body>
-		<h1>请输入你要查询的产品型号</h1>
-		<p>本站支持模糊查询，模糊查询的通配符是 %
-			<ul>
-				<li>如果你要搜索一个品类，直接输入名称就可以，比如输入：DZ47</li>
-				<li>如果你要更精确，再添加参数，比如输入： DZ47%1P</li>
-				<li>如果你要搜索 dz47 1p c16，可以输入: dz47%1p%c16</li>
-				<li>搜索不区分大小写，输入 dz47 和 DZ47 出来的结果都是一样的</li>
-			</ul>
-		</p>
-		<p>支持按照厂家搜索，如果不选厂家，则默认搜索所有的厂家</p>
+		<h2 class="text-center">请输入你要查询的产品型号</h2>
+		<div>
+			<p>本站支持模糊查询，模糊查询的通配符是 %
+				<ul>
+					<li>如果你要搜索一个品类，直接输入名称就可以，比如输入：DZ47</li>
+					<li>如果你要更精确，再添加参数，比如输入： DZ47%1P</li>
+					<li>如果你要搜索 dz47 1p c16，可以输入: dz47%1p%c16</li>
+					<li>搜索不区分大小写，输入 dz47 和 DZ47 出来的结果都是一样的</li>
+				</ul>
+			</p>
+			<p>支持按照厂家搜索，如果不选厂家，则默认搜索所有的厂家</p>
+		</div>
 		<form action="search.php" method="post">
-			<select name="brand">
+			<select name="brand" class="form-control">
 				<option value="%">默认不指定厂家</option>
 				<option value="正泰" <?php if($_POST['brand'] == '正泰') echo 'selected'?>>正泰</option>
 				<option value="德力西" <?php if($_POST['brand'] == '德力西') echo 'selected'?>>德力西</option>
@@ -26,7 +34,7 @@
 			</select>
 			<label for="name">产品型号</label>
 			<input type="text" id="name" name="name" placeholder="超过三十万条数据" value="<?php echo $_POST['name']; ?>">
-			<input type="submit" value="提交查询"	name="submit">  
+			<input type="submit" value="提交查询"	name="submit" class="btn btn-success">  
 		</form>
 
 		<?php
@@ -37,7 +45,7 @@
 			if(isset($_POST['submit'])){ //判断是否有点击提交
 
 				printf("累计查询%d次", counter());
-				
+
 		        if(!empty($name)){   //如果有提交，如果输入型号不为空
 
 		        	//连接数据库
@@ -52,8 +60,8 @@
 					echo  '<br />';
 					printf("查询成功 总共%d条结果", mysqli_num_rows($result));
 					echo   '<br />'.'<br />';
-					echo   '<table border="1">';
-					echo   '<tr>';
+					echo   '<table class="table table-striped">';
+					echo   '<tr class="success">';
 					echo   '<th>品牌</th>';
 					echo   '<th>产品型号</th>';
 					echo   '<th>类型</th>';
