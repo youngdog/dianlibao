@@ -15,7 +15,29 @@
 			mysqli_query($dbc,"set names 'utf8'");
 
 			//查询数据库
-			$query = "select * from product where spec like '%$name%' and brand like '$brand'";
+			$search_words = explode(' ', $name);
+			$final_search_words = array();
+			if (count($search_words) > 0){
+				foreach ($search_words as $word) {
+					if (!empty($word)){
+						$final_search_words[] = $word;
+					}
+				}
+			}
+
+			$where_list = array();
+			if (count($final_search_words) > 0){
+				foreach ($final_search_words as $word) {
+					$where_list[] = "spec like '%$word%'";
+				}
+			}
+			$where_clause = implode(' and ', $where_list);
+
+			if (!empty($where_clause)){
+				$query = "select * from product where $where_clause and brand like '$brand'";
+			}
+
+			//$query = "select * from product where spec like '%$name%' and brand like '$brand'";
 			$result = mysqli_query($dbc, $query) or die(查询出错);
 
 			//显示查询结果
